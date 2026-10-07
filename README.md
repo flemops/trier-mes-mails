@@ -1,56 +1,21 @@
-# Trier mes Mails 📧
+# trier-mes-mails
 
-Script Python pour trier automatiquement tes mails Gmail.
+> **Statut : ARCHIVÉ (07/10/2026) — lab abandonné, conservé pour mémoire.** Aucun développement, aucune maintenance.
 
-## 🎯 Ce qu'il fait
-- ✅ Garde les mails **importants** (starred/marked as important) dans ta boîte
-- 📤 Déplace les autres dans un dossier `a_supprimer`
-- ✏️ Tu peux vérifier avant de vraiment les supprimer
+Petit script Python (août 2026) qui triait une boîte **Gmail** via l'API Gmail : les mails marqués importants restaient en place, les autres recevaient un label `a_supprimer` pour relecture avant suppression.
 
-## 📋 Prérequis
-- Python 3.7+
-- Compte Gmail
-- Accès API Gmail (setup ci-dessous)
+## Pourquoi archivé
 
-## ⚙️ Installation
+- Un usage ponctuel, limité à Gmail ; le tri courant se fait désormais par **règles de messagerie** (Outlook) et par automatisation n8n auto-hébergée, sans code à maintenir ici.
+- Le dépôt contient plusieurs scripts d'installation redondants (`auto_setup.py`, `full_setup.py`, `setup_auto.sh`, …) et une authentification par fichier `token.pickle` : ni l'un ni l'autre ne mérite d'être modernisé pour un outil remplacé.
+- Aucun autre dépôt ni service ne dépend de celui-ci (vérifié le 07/10/2026).
 
-### 1. Cloner le repo
-```bash
-git clone https://github.com/flemops/trier-mes-mails.git
-cd trier-mes-mails
-```
+## Ce que montrait le projet
 
-### 2. Installer les dépendances
-```bash
-pip install -r requirements.txt
-```
+Premier contact avec une API OAuth (Gmail), un script en ligne de commande et une CI Python minimale (`pip check`, compilation, `pip-audit`). **Lab personnel, pas un produit** ; aucune garantie de fonctionnement.
 
-### 3. Configuration Gmail API
-1. Va sur [Google Cloud Console](https://console.cloud.google.com/)
-2. Crée un nouveau projet
-3. Active l'API Gmail
-4. Crée des identifiants (OAuth 2.0 - Application de bureau)
-5. Télécharge le JSON → renomme-le `credentials.json`
-6. Place-le dans le dossier du projet
+## Précautions si quelqu'un le réutilise
 
-## 🚀 Utilisation
-```bash
-python trier_mails.py
-```
-
-### Au premier lancement
-- Ouverture navigateur pour authentification
-- Token sauvegardé automatiquement
-
-### Résultat
-- Mails importants : restent en place
-- Autres : label `a_supprimer`
-- Résumé du tri affiché
-
-## 🛡️ Sécurité
-- `token.pickle` → ne pas commiter
-- `credentials.json` → ne pas commiter
-- Fichier `.gitignore` pré-configuré
-
-## 📝 Note
-Modification facile des critères dans le code si besoin.
+- Portée OAuth demandée : `gmail.modify` (lecture et modification) — plus large que nécessaire pour un simple étiquetage ; à restreindre.
+- Pas de mode « simulation » (dry-run) : le script applique le label directement.
+- `token.pickle` et `credentials.json` ne doivent jamais être commités (le `.gitignore` les exclut). Un fichier `credentials.json` composé uniquement de valeurs d'exemple a figuré dans l'historique initial ; il ne contenait aucun identifiant réel.
